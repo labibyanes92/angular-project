@@ -1,0 +1,18 @@
+<!-- About-Company -->
+<div class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4" *ngFor="let item of infobox">
+                <div class="info_box">
+                    <div class="icon">
+                        <img [src]="item.icon" [alt]="item.title">
+                    </div>
+                    <h5>{{item.title}}</h5>
+                    <p>{{item.longtext}}</p>
+                    <a routerLink="/shop" class="round-btn"><i class="fa fa-angle-double-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /About-Company -->

@@ -1,0 +1,18 @@
+<!-- Gallery -->
+<div class="section-padding">
+    <div class="container">
+        <div class="galleryFilter">
+            <a href="javascript:void(0)" [ngClass]="activeItem === -1 ? 'current' : ''" (click)="reset(-1)">All</a>
+            <a href="javascript:void(0)" [ngClass]="activeItem === item.id ? 'current' : ''"
+                *ngFor="let item of categories" (click)="filterItemsByCategory(item, item.id)">{{item.title}}</a>
+        </div>
+        <ng-masonry-grid [masonryOptions]="{ transitionDuration: '750', easing: 'linear', queue: false }"
+            [useAnimation]="true" [useImagesLoaded]="true" class="galleryContainer row">
+            <ng-masonry-grid-item class="img-box col-md-6" id="{{'masonry-item-'+i}}"
+                *ngFor="let item of filteredItems; let i = index;">
+                <img [src]="item.image" alt="image">
+            </ng-masonry-grid-item>
+        </ng-masonry-grid>
+    </div>
+</div>
+<!-- /Gallery -->

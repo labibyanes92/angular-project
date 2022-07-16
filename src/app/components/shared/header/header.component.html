@@ -1,0 +1,129 @@
+<!-- Mobile Aside -->
+<aside class="sigma_aside" [ngClass]="navmethod ? '' : 'aside-open'">
+    <div class="sigma_close aside-trigger" (click)="toggleNav()">
+        <span></span>
+        <span></span>
+    </div>
+    <app-mobile-menu></app-mobile-menu>
+</aside>
+<div class="sigma_aside-overlay aside-trigger" (click)="toggleNav()"></div>
+<!-- Main Header -->
+<header class="sigma_header can-sticky" id="can-sticky">
+    <div class="sigma_header-topbar d-none d-md-block">
+        <div class="container-fluid">
+            <div class="sigma_header-topbar-inner row align-items-center">
+                <div class="col-md-4">
+                    <div class="follow_us">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            <li><a href="#"><i class="fa fa-internet-explorer"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="sigma_offer-slider text-center">
+                        <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="offer-slider">
+                            <p ngxSlickItem>Welcome To <span class="primary-color"> Template</span> Shop</p>
+                            <p ngxSlickItem>New Arrival Up To<span class="primary-color"> 70%</span> Off</p>
+                            <p ngxSlickItem>Limited Stock<span class="primary-color"> Hurry Up</span> Now</p>
+                        </ngx-slick-carousel>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="topbar-links justify-content-end">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-phone"></i>
+                                +343 676 9806 900
+                            </a>
+                        </li>
+                        <li class="d-none d-lg-block">
+                            <a href="#">
+                                <i class="fa fa-envelope"></i>
+                                example@example.com
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sigma_header-middle">
+        <div class="container-fluid">
+            <div class="navbar">
+                <div class="sigma_logo-wrapper">
+                    <a class="sigma_logo" routerLink="/">
+                        <img src="assets/images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="menu-item" [ngClass]="item.child == true ? 'menu-item-has-children' : ''"
+                        *ngFor="let item of navigation">
+                        <a href="javascript:void(0)" *ngIf="item.child">{{item.linkText}}</a>
+                        <a routerLink="{{item.link}}" *ngIf="!item.child">{{item.linkText}}</a>
+                        <ul class="sub-menu" *ngIf="item.child" [ngClass]="item.open ? 'd-block' : ''">
+                            <li class="menu-item" [ngClass]="item.child == true ? 'menu-item-has-children' : ''"
+                                *ngFor="let item of item.submenu">
+                                <a href="javascript:void(0)" *ngIf="item.child">{{item.linkText}}</a>
+                                <a routerLink="{{item.link}}" *ngIf="!item.child">{{item.linkText}}</a>
+                                <ul class="sub-menu" *ngIf="item.child" [ngClass]="item.open ? 'd-block' : ''">
+                                    <li class="menu-item" *ngFor="let item of item.submenu">
+                                        <a routerLink="{{item.link}}">{{item.linkText}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="sigma_header-controls">
+                    <ul class="sigma_header-controls-inner">
+                        <li class="aside-toggle aside-trigger-right desktop-toggler" (click)="toggleSidebar()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </li>
+                        <li class="search-trigger header-controls-item d-none d-sm-block">
+                            <a href="javascript:void(0)" (click)="searchToggle()">
+                                <i class="flaticon-search"></i>
+                            </a>
+                        </li>
+                        <li class="header-controls-item d-none d-sm-block">
+                            <a routerLink="/cart">
+                                <i class="flaticon-shopping-bag"></i>
+                                <span class="cart-count">{{cartlength}}</span>
+                            </a>
+                        </li>
+                        <li class="header-controls-item d-none d-sm-block">
+                            <a routerLink="/wishlist">
+                                <i class="flaticon-heart"></i>
+                                <span class="cart-count">{{wishlistlength}}</span>
+                            </a>
+                        </li>
+                        <li class="aside-toggle aside-trigger" (click)="toggleNav()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Form Start-->
+    <div class="search-form-wrapper" [ngClass]="searchmethod ? '' : 'open'">
+        <div class="search-trigger sigma_close" (click)="searchToggle()">
+            <span></span>
+            <span></span>
+        </div>
+        <app-search-form></app-search-form>
+    </div>
+    <!-- Search Form End-->
+    <!-- Sidebar-Nav -->
+    <div id="sidebar_nav" class="slide_menu" [ngClass]="sidebarmethod ? '' : 'show'">
+        <app-canvas></app-canvas>
+    </div>
+    <div id="overlay_bg" [ngClass]="sidebarmethod ? '' : 'show'" (click)="toggleSidebar()"></div>
+    <!-- /Sidebar-Nav -->
+</header>

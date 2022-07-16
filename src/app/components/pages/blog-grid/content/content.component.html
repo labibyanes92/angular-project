@@ -1,0 +1,36 @@
+<!-- Blog -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6" *ngFor="let item of blogpost | paginate: { itemsPerPage: 6, currentPage: page }">
+                <div class="post_wrap style-2">
+                    <div class="post_img">
+                        <a routerLink="/blog-details/{{item.id}}">
+                            <img [src]="item.image[0]" [alt]="item.title">
+                        </a>
+                    </div>
+                    <div class="post_info">
+                        <div class="post_date"><a routerLink="/blog-details/{{item.id}}"><i class="fa fa-calendar"></i> {{item.postdate}}</a></div>
+                        <h5><a routerLink="/blog-details/{{item.id}}">{{item.title}}</a></h5>
+                        <p>{{item.shortdesc | slice:0:60}}...</p>
+                        <div class="post_categorys">
+                            <a routerLink="/blog/cat/{{cat.id}}" *ngFor="let cat of getCategories(item.category) | slice:0:2">{{cat.title}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="blogpost < '0'">
+                <ngb-alert [dismissible]="false">
+                    <strong>Opps!</strong> No Posts in Page
+                </ngb-alert>
+            </div>
+        </div>
+        <!-- Pagination Start -->
+        <div class="pagination_wrap pagination">
+            <pagination-controls (pageChange)="page = $event" responsive="true" previousLabel="<" nextLabel=">">
+            </pagination-controls>
+        </div>
+        <!-- Pagination End -->
+    </div>
+</div>
+<!-- /Blog -->

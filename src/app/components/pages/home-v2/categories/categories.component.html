@@ -1,0 +1,18 @@
+<!-- Category -->
+<div class="section-padding-2">
+    <div class="container-fluid">
+        <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_category-slider">
+            <div ngxSlickItem class="sigma_category-item my-style" *ngFor="let item of category">
+                <div class="sigma_category">
+                    <a routerLink="/shop/cat/{{item.id}}">
+                        <img [src]="item.image" [alt]="item.title">
+                    </a>
+                    <div class="sigma_category-content">
+                        <span>{{item.title}}</span>
+                    </div>
+                </div>
+            </div>
+        </ngx-slick-carousel>
+    </div>
+</div>
+<!-- /Category -->

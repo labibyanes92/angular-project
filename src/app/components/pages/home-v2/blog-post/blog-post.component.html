@@ -1,0 +1,34 @@
+<!-- Blog -->
+<div class="section-padding-2 pt-0">
+    <div class="container">
+        <div class="section-header text-center">
+            <h5>Recent news</h5>
+            <div class="heading_arrow">
+                <span class="dots_div"></span>
+                <span class="s"></span>
+                <span class="dots_div"></span>
+            </div>
+            <h2>Our Blog</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6" *ngFor="let item of blogpost | slice:0:3">
+                <div class="post_wrap style-2">
+                    <div class="post_img">
+                        <a routerLink="/blog-details/{{item.id}}">
+                            <img [src]="item.image[0]" [alt]="item.title">
+                        </a>
+                    </div>
+                    <div class="post_info">
+                        <div class="post_date"><a routerLink="/blog-details/{{item.id}}"><i class="fa fa-calendar"></i> {{item.postdate}}</a></div>
+                        <h5><a routerLink="/blog-details/{{item.id}}">{{item.title}}</a></h5>
+                        <p>{{item.shortdesc | slice:0:60}}...</p>
+                        <div class="post_categorys">
+                            <a routerLink="/blog/cat/{{cat.id}}" *ngFor="let cat of getCategories(item.category) | slice:0:2">{{cat.title}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog -->

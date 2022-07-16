@@ -1,0 +1,35 @@
+<!-- Team Detail -->
+<div class="section-padding" *ngFor="let item of teamdetails">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="about_img dots_bg h-100">
+                    <img [src]="item.image" [alt]="item.name" class="h-100">
+                </div>
+            </div>
+            <div class="col-md-6"> 
+                <div class="about_company about-team">
+                    <h3>{{item.name}}</h3>
+                    <h6 class="sub-heading">{{item.designation}}</h6>
+                    <p class="mb-0">{{item.text}}</p>
+                    <ul class="team-descr">
+                        <li *ngFor="let info of item.contactinfo">
+                            <i [class]="info.icon"></i>
+                            <span class="descr-title">{{info.title}} :</span>
+                            <span *ngIf="!info.link">{{info.text}}</span>
+                            <a href="{{info.text}}" *ngIf="info.link">{{info.text}}</a>
+                        </li>
+                    </ul>
+                    <div class="follow_us">
+                        <ul>
+                            <li *ngFor="let social of item.social">
+                                <a routerLink="{{social.url}}"><i [class]="social.icon"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Team Detail -->

@@ -1,0 +1,36 @@
+<!-- Trending Products -->
+<div class="section-padding pt-0">
+    <div class="container">
+        <div class="section-header text-center">
+            <h5>Best Of Month</h5>
+            <div class="heading_arrow">
+                <span class="dots_div"></span>
+                <span class="s"></span>
+                <span class="dots_div"></span>
+            </div>
+            <h2>Trending Products</h2>
+        </div>
+        <div class="row"> 
+            <div class="col-12">
+                <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_trending-product-slider">
+                    <div ngxSlickItem class="sigma_portfolio style-3" *ngFor="let item of getTrending()">
+                        <div class="sigma_portfolio-thumb">
+                            <img [src]="item.image[0]" [alt]="item.title">
+                        </div>
+                        <div class="sigma_portfolio-content">
+                            <div class="sigma_portfolio-categories">
+                                <a routerLink="/shop/cat/{{cat.id}}" class="sigma_portfolio-category" *ngFor="let cat of getCategories(item.category) | slice:0:1">{{cat.title}}</a>
+                            </div>
+                            <h5>
+                                <a routerLink="/shop-details/{{item.id}}">{{item.title}}</a>
+                            </h5>
+                            <p>{{item.shorttext | slice:0:170}}</p>
+                            <a routerLink="/shop-details/{{item.id}}" class="btn">Order Now</a>
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Trending Products -->

@@ -1,0 +1,31 @@
+<div class="sidebar_logo">
+    <img src="assets/images/logo.png" alt="logo">
+</div>
+<div class="sidebar_widget popular_widget">
+    <div class="widget_title">
+        <h4>Feeds</h4>
+    </div>
+    <ul>
+        <li *ngFor="let item of recentPost()">
+            <div class="post_thumb">
+                <a routerLink="/blog-details/{{item.id}}">
+                    <img [src]="item.image[0]" [alt]="item.title">
+                </a>
+            </div>
+            <h6><a routerLink="/blog-details/{{item.id}}">{{item.title}}</a></h6>
+            <p><i class="fa fa-calendar"></i> {{item.postdate}}</p>
+        </li>
+    </ul>
+</div>
+<div class="sidebar_widget instagram_widget">
+    <div class="widget_title">
+        <h4>Instagram</h4>
+    </div>
+    <ul>
+        <li *ngFor="let item of instagramblock | slice:0:6">
+            <a href="#">
+                <img [src]="item.image" alt="image">
+            </a>
+        </li>
+    </ul>
+</div>

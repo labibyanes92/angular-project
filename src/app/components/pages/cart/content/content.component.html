@@ -1,0 +1,100 @@
+<!-- Cart -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <!-- Cart Table Start -->
+        <div class="table-responsive-md">
+            <table class="andro_responsive-table">
+                <thead>
+                    <tr>
+                        <th class="remove-item"></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cartItems">
+                        <td class="remove">
+                            <button type="button" class="sigma_close remove-from-cart" (click)="handleDeleteFromCart(item)">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </td>
+                        <td data-title="Product">
+                            <div class="andro_cart-product-wrapper">
+                                <img [src]="item.image[0]" [alt]="item.title">
+                                <div class="andro_cart-product-body">
+                                    <h6> <a routerLink="/shop-details/{{item.id}}">{{item.title}}</a> </h6>
+                                    <p>{{getItemQuantity(item)}} pieces</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-title="Price"> <strong>{{item.price | number:'1.2-2'}}$</strong> </td>
+                        <td class="quantity" data-title="Quantity">
+                            <div class="quantity-box">
+                                <button type="button" class="minus-btn" (click)="handleDecrementQty(item)">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <input type="text" class="input-qty" name="name" value="{{getItemQuantity(item)}}" readonly>
+                                <button type="button" class="plus-btn" (click)="handleAddToCart(item)">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td data-title="Total"> <strong>{{item.price * getItemQuantity(item) | number:'1.2-2'}}$</strong> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Cart Table End -->
+        <!-- Coupon Code Start -->
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="form-group mb-0">
+                    <div class="input-group mb-0">
+                        <input type="text" class="form-control" placeholder="Enter Coupon Code" aria-label="Coupon Code">
+                        <div class="input-group-append">
+                            <button class="btn" type="button">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Coupon Code End -->
+    </div>
+</div>
+<!-- /Cart -->
+<!-- Cart form Start -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <app-shop-slider></app-shop-slider>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-header flex-header">
+                    <h3>Cart Total</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Subtotal</th>
+                            <td>{{calculateprice() | number:'1.2-2'}}$</td>
+                        </tr>
+                        <tr>
+                            <th>Tax</th>
+                            <td> 9.99$ <span class="small">(11%)</span> </td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td> <b>{{calculateprice() + 9.99 | number:'1.2-2'}}$</b> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a routerLink="/checkout" class="btn btn-block">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart form End -->

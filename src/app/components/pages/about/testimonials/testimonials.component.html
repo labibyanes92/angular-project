@@ -1,0 +1,34 @@
+<div class="section-padding gray_bg">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="about_company p-0">
+                    <h6 class="sub-heading">Happy Clients</h6>
+                    <h3>Client Say's About Our Product</h3>
+                    <p>To safely collect honey from a hive, beekeepers typically pacify the bees using a bee smoker. The smoke triggers a feeding instinct (an attempt to save the resources of the hive from a possible fire), making them less aggressive, and obscures the pheromones the bees use to communicate. The honeycomb is removed from the hive and the honey may be extracted from it either by crushing or by using a honey extractor. The honey is then usually filtered to remove beeswax and other debris.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_testimonial-slider">
+                    <div ngxSlickItem class="item" *ngFor="let item of testimonials">
+                        <div class="testimonial_box">
+                            <div class="stars">
+                                <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true">
+                                    <ng-template let-fill="fill" let-index="index">
+                                        <i class="fa fa-star" [class.active]="fill === 100"></i>
+                                    </ng-template>
+                                </ngb-rating>
+                            </div>
+                            <p>{{item.comment}} </p>
+                            <div class="testimonial_author" *ngFor="let author of getAuthor(item.user)">
+                                <img [src]="author.image" [alt]="author.name">
+                                <h5>{{author.name}}</h5>
+                                <p>{{author.designation}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+</div>

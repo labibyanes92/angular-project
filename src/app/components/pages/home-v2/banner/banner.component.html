@@ -1,0 +1,20 @@
+<!-- Intro -->
+<div class="sigma-banner bg-cover bg-center" [style.background-image]="'url(assets/images/intro_bg.jpg)'">
+    <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_banner-slider">
+        <!-- slider-item -->
+        <div ngxSlickItem class="sigma_banner-slider-inner" *ngFor="let item of bannerpost">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="intro_text text-center">
+                            <h5>{{item.subtitle}}</h5>
+                            <h1>{{item.title}}</h1>
+                            <a routerLink="/shop-details/1" class="btn">Order now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div>
+<!-- /Intro -->

@@ -1,0 +1,65 @@
+<!-- Wishlist -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <!-- Wishlist Table Start -->
+        <div class="table-responsive-md">
+            <table class="andro_responsive-table">
+                <thead>
+                    <tr>
+                        <th class="remove-item"></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of wishlistItems">
+                        <td class="remove">
+                            <button type="button" class="sigma_close remove-from-cart" (click)="handleDeleteFromWishlist(item)">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </td>
+                        <td data-title="Product">
+                            <div class="andro_cart-product-wrapper">
+                                <img [src]="item.image[0]" [alt]="item.title">
+                                <div class="andro_cart-product-body">
+                                    <h6> <a routerLink="/shop-details/{{item.id}}">{{item.title}}</a> </h6>
+                                    <p>{{getItemQuantity(item)}} piece</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-title="Price"> <strong>{{item.price | number:'1.2-2'}}$</strong> </td>
+                        <td data-title="Availability">
+                            <span class="andro_product-stock text-success" *ngIf="item.stock">In Stock</span>
+                            <span class="andro_product-stock text-danger" *ngIf="!item.stock">Out of Stock</span>
+                        </td>
+                        <td data-title="Total"> <strong>{{item.price * getItemQuantity(item) | number:'1.2-2'}}$</strong> </td>
+                        <td data-title="Actions"> 
+                            <button type="button" class="btn btn-sm" (click)="productAddtoCart(item)" *ngIf="item.stock">Add to Cart</button> 
+                            <button type="button" class="btn btn-sm" *ngIf="!item.stock" disabled>Add to Cart</button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Wishlist Table End -->
+        <!-- Share Wishlist Start -->
+        <div class="text-center">
+            <h5>Share Your Wishlist</h5>
+            <div class="followus_widget">
+                <ul class="p-0 m-0">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa fa-wordpress"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Share Wishlist End -->
+    </div>
+</div>
+<!-- /Wishlist -->

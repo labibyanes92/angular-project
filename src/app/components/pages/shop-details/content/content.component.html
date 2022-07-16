@@ -1,0 +1,202 @@
+<!-- Shop Detail -->
+<div class="section-padding pb-0" *ngFor="let item of shopdetails">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_product-slider-1">
+                    <div ngxSlickItem class="item" *ngFor="let image of item.image">
+                        <img [src]="image" [alt]="item.title">
+                    </div>
+                </ngx-slick-carousel>
+                <ngx-slick-carousel #slickModal="slick-carousel" [config]="settingsThumb"
+                    class="sigma_product-slider-2 mt-3">
+                    <img ngxSlickItem [src]="image" [alt]="item.title" *ngFor="let image of item.image">
+                </ngx-slick-carousel>
+            </div>
+            <div class="col-lg-7">
+                <div class="shop-detail-content mt-5 mt-lg-0">
+                    <h3 class="product-title m-0">{{item.title}}</h3>
+                    <div class="stars">
+                        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true">
+                            <ng-template let-fill="fill" let-index="index">
+                                <i class="fa fa-star" [class.active]="fill === 100"></i>
+                            </ng-template>
+                        </ngb-rating>
+                        <span class="pro-review">{{item.reviews.length}} Reviews</span>
+                    </div>
+                    <div class="sigma_product-price">
+                        <span>${{item.price * (100 - item.discount) / 100 | number:'1.2-2'}}</span>
+                        <span *ngIf="item.discount">${{item.price | number:'1.2-2'}}</span>
+                    </div>
+                    <div class="shop-detail-inner">
+                        <div class="availability-box">
+                            <div class="d-inline-block other-info">
+                                <h6>Availability:
+                                    <span class="text-success ml-2" *ngIf="item.stock">In Stock</span>
+                                    <span class="text-danger ml-2" *ngIf="!item.stock">Out of Stock</span>
+                                </h6>
+                            </div>
+                            <div class="ml-2 d-inline-block other-info">
+                                <h6>SKU:
+                                    <span class="grey ml-2">{{item.sku}}</span>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="short-descr">
+                            <p>{{item.shorttext}}</p>
+                        </div>
+                        <div class="quantity-cart d-sm-flex align-items-center">
+                            <div class="quantity-box">
+                                <button type="button" class="minus-btn" (click)="decrement()">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <input type="text" class="input-qty" name="name" value="{{counter}}">
+                                <button type="button" class="plus-btn" (click)="increment()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="cart-btn">
+                                <button type="button" class="btn" *ngIf="item.stock"
+                                    (click)="detailHandleAddToCart(item)">Add
+                                    to Cart</button>
+                                <button type="button" class="btn" *ngIf="!item.stock" (click)="handleOutofStock()"
+                                    disabled>Add
+                                    to Cart</button>
+                            </div>
+                        </div>
+                        <div class="other-info flex">
+                            <h6>Category:</h6>
+                            <ul>
+                                <li class="list-inline-item mr-2"
+                                    *ngFor="let cat of getCategories(item.category) | slice:0:3">
+                                    <a routerLink="/shop/cat/{{cat.id}}" class="grey">{{cat.title}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="other-info flex">
+                            <h6>Tags:</h6>
+                            <ul>
+                                <li class="list-inline-item mr-2" *ngFor="let tag of getTags(item.tags) | slice:0:3">
+                                    <a routerLink="/shop/tag/{{tag.id}}" class="grey">{{tag.title}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="product-description">
+                    <div class="tabs">
+                        <ul ngbNav #nav="ngbNav" class="nav nav-tabs justify-content-center">
+                            <li [ngbNavItem]="1">
+                                <a ngbNavLink>Description</a>
+                                <ng-template ngbNavContent>
+                                    <div [innerHtml]="item.htmltext"></div>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="2">
+                                <a ngbNavLink>Reviews ({{item.reviews.length}})</a>
+                                <ng-template ngbNavContent>
+                                    <div class="news-details-box">
+                                        <div id="comments">
+                                            <div class="all_comments m-0 p-0 border-0">
+                                                <h4>Reviews</h4>
+                                                <ul class="commentlist" *ngFor="let review of item.reviews">
+                                                    <li class="comment">
+                                                        <div class="comment the-comment">
+                                                            <div class="comment-avatar"
+                                                                *ngFor="let user of getAuthor(review.user)">
+                                                                <img [alt]="user.name" [src]="user.image"
+                                                                    class="avatar">
+                                                            </div>
+                                                            <div class="comment-content">
+                                                                <div class="comment-meta">
+                                                                    <span class="comment-time"><span>
+                                                                            {{review.commentdate}}</span></span>
+                                                                    <span class="comment-author"
+                                                                        *ngFor="let user of getAuthor(review.user)">
+                                                                        <a routerLink="/team-details/{{user.id}}"
+                                                                            class="url">{{user.name}}</a>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="text">
+                                                                    <div class="comment-text">
+                                                                        <p>{{review.comment}}</p>
+                                                                        <span class="reply"> <a rel="nofollow"
+                                                                                class="comment-reply-link" href="#"><i
+                                                                                    class="fa fa-reply"></i> Reply</a>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- /all-comment -->
+                                            <!-- comment-form-->
+                                            <div id="respond" class="comment-respond">
+                                                <h4>Post Review</h4>
+                                                <form id="commentform" class="comment-form">
+                                                    <div class="form-group">
+                                                        <div class="msg_input">
+                                                            <textarea name="comment" cols="45" rows="3"
+                                                                class="form-control"
+                                                                placeholder="Type your comments...."></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name_input">
+                                                            <input type="email" class="form-control"
+                                                                placeholder="Type name email....">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="email_input">
+                                                            <input type="email" class="form-control"
+                                                                placeholder="Type your email....">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="web_input">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Type your website....">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn">Post Review</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="3">
+                                <a ngbNavLink>Additional Info</a>
+                                <ng-template ngbNavContent class="additional-info">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Attributes</th>
+                                                <th>Values</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let info of item.additionalinfo">
+                                                <td><b>{{info.title}}</b></td>
+                                                <td class="value">{{info.text}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="nav" class="pb-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Shop Detail -->

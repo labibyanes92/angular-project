@@ -1,0 +1,26 @@
+<!-- Services -->
+<div class="section-padding">
+    <div class="container">
+        <div class="section-header text-center">
+            <h5>Our Services</h5>
+            <div class="heading_arrow">
+                <span class="dots_div"></span>
+                <span class="s"></span>
+                <span class="dots_div"></span>
+            </div>
+            <h2>We Help You For Move Forward</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6" *ngFor="let item of serviceblock | slice:0:4">
+                <div class="service_box">
+                    <div class="icon_wp">
+                        <img [src]="item.icon" [alt]="item.title">
+                    </div>
+                    <h3><a routerLink="/service-details">{{item.title}}</a></h3>
+                    <p>{{item.text}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Services -->

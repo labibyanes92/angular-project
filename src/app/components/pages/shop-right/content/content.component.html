@@ -1,0 +1,169 @@
+<!-- Shop -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mt-5 mt-lg-0 order-2 order-lg-1">
+                <!-- top filter bar -->
+                <div class="sigma_shop-filter d-block d-sm-flex">
+                    <p>Showing {{shopblock.length}} results</p>
+                    <div class="filter-box position-relative mt-4 mt-sm-0">
+                        <select class="form-control">
+                            <option value="" selected>Filter</option>
+                            <option value="1">Sort By Popularity</option>
+                            <option value="2">Sort By Latest</option>
+                            <option value="3">Sort By Rating</option>
+                            <option value="4">Sort By Price:Low to High</option>
+                            <option value="5">Sort By Price:High to Low</option>
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                </div>
+                <!-- Products Starts -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6"
+                        *ngFor="let item of shopblock | paginate: { itemsPerPage: 12, currentPage: page }">
+                        <div class="sigma_product style-5">
+                            <div class="sigma_product-thumb">
+                                <a routerLink="/shop-details/{{item.id}}">
+                                    <img [src]="item.image[0]" [alt]="item.title">
+                                </a>
+                                <div class="sigma_product-controls">
+                                    <a href="javascript:void(0)" (click)="handleAddToWishlist(item)"
+                                        [ngClass]="isProductInWishlist(item.id) ? 'd-none' : ''"><i
+                                            class="fa fa-heart"></i></a>
+                                    <a href="javascript:void(0)" (click)="handleDeleteFromWishlist(item)" class="active"
+                                        [ngClass]="isProductInWishlist(item.id) ? '' : 'd-none'"><i
+                                            class="fa fa-heart"></i></a>
+                                            <a href="javascript:void(0)" (click)="handleAddToCart(item)" *ngIf="item.stock"><i
+                                                    class="fa fa-shopping-cart"></i></a>
+                                            <a href="javascript:void(0)" *ngIf="!item.stock" (click)="handleOutofStock()"><i
+                                                    class="fa fa-shopping-cart"></i></a>
+                                    <a href="javascript:void(0)" (click)="open(shopmodal, item)"><i
+                                            class="fa fa-eye"></i></a>
+                                </div>
+                                <div class="sigma_product-badge">
+                                    <span class="sale" *ngIf="item.sale">Sale</span>
+                                    <span class="discount" *ngIf="item.discount">-{{item.discount}}%</span>
+                                </div>
+                            </div>
+                            <div class="sigma_product-body">
+                                <h5 class="sigma_product-title">
+                                    <a routerLink="/shop-details/{{item.id}}">{{item.title}}</a>
+                                </h5>
+                                <div class="sigma_product-price">
+                                    <span>${{item.price * (100 - item.discount) / 100 | number:'1.2-2'}}</span>
+                                    <span *ngIf="item.discount">${{item.price | number:'1.2-2'}}</span>
+                                </div>
+                                <div class="cart-btn">
+                                    <a href="javascript:void(0)" (click)="handleAddToCart(item)" *ngIf="item.stock">Add to Cart</a>
+                                    <a href="javascript:void(0)" *ngIf="!item.stock" (click)="handleOutofStock()">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination Start -->
+                <div class="pagination_wrap pagination">
+                    <pagination-controls (pageChange)="page = $event" responsive="true" previousLabel="<" nextLabel=">">
+                    </pagination-controls>
+                </div>
+                <!-- Pagination End -->
+            </div>
+            <!-- Sidebar -->
+            <aside class="col-lg-4 order-1 order-lg-2">
+                <app-shop-sidebar></app-shop-sidebar>
+            </aside>
+            <!-- /Sidebar -->
+        </div>
+    </div>
+</div>
+<!-- /Shop -->
+<ng-template #shopmodal let-modal>
+    <div class="modal-body">
+        <div class="sigma_close" (click)="modal.dismiss('Cross click')">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="sigma_product-image">
+                        <img [src]="modalContent.image[0]" [alt]="modalContent.title">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="shop-detail-content mt-5 mt-lg-0">
+                        <h3 class="product-title m-0">{{modalContent.title}}</h3>
+                        <div class="stars">
+                            <ngb-rating [max]="5" [(rate)]="modalContent.rating" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <i class="fa fa-star" [class.active]="fill === 100"></i>
+                                </ng-template>
+                            </ngb-rating>
+                            <span class="pro-review">{{modalContent.reviews.length}} Reviews</span>
+                        </div>
+                        <div class="sigma_product-price">
+                            <span>${{modalContent.price * (100 - modalContent.discount) / 100 | number:'1.2-2'}}</span>
+                            <span *ngIf="modalContent.discount">${{modalContent.price | number:'1.2-2'}}</span>
+                        </div>
+                        <div class="shop-detail-inner">
+                            <div class="availability-box">
+                                <div class="d-inline-block other-info">
+                                    <h6>Availability:
+                                        <span class="text-success ml-2" *ngIf="modalContent.stock">In Stock</span>
+                                        <span class="text-danger ml-2" *ngIf="!modalContent.stock">Out of Stock</span>
+                                    </h6>
+                                </div>
+                                <div class="ml-2 d-inline-block other-info">
+                                    <h6>SKU:
+                                        <span class="grey ml-2">{{modalContent.sku}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="short-descr">
+                                <p>{{modalContent.shorttext}}</p>
+                            </div>
+                            <div class="quantity-cart d-sm-flex align-items-center">
+                                <div class="quantity-box">
+                                    <button type="button" class="minus-btn" (click)="decrement()">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <input type="text" class="input-qty" name="name" value="{{counter}}">
+                                    <button type="button" class="plus-btn" (click)="increment()">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="cart-btn">
+                                    <button type="button" class="btn" *ngIf="modalContent.stock"
+                                        (click)="handlePopupAddToCart(modalContent)">Add
+                                        to Cart</button>
+                                    <button type="button" class="btn" *ngIf="!modalContent.stock"
+                                        (click)="handleOutofStock()" disabled>Add
+                                        to Cart</button>
+                                </div>
+                            </div>
+                            <div class="other-info flex">
+                                <h6>Category:</h6>
+                                <ul>
+                                    <li class="list-inline-item mr-2"
+                                        *ngFor="let cat of getCategories(modalContent.category) | slice:0:3">
+                                        <a routerLink="/shop/cat/{{cat.id}}" class="grey">{{cat.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="other-info flex">
+                                <h6>Tags:</h6>
+                                <ul>
+                                    <li class="list-inline-item mr-2"
+                                        *ngFor="let tag of getTags(modalContent.tags) | slice:0:3">
+                                        <a routerLink="/shop/tag/{{tag.id}}" class="grey">{{tag.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

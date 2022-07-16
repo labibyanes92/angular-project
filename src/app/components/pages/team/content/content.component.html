@@ -1,0 +1,30 @@
+<!-- Team -->
+<div class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6" *ngFor="let item of teamblock | paginate: { itemsPerPage: 6, currentPage: page }">
+                <div class="team_wp">
+                    <div class="team_img">
+                        <img [src]="item.image" [alt]="item.name">
+                        <div class="hover_wp">
+                            <ul>
+                                <li *ngFor="let social of item.social">
+                                    <a routerLink="{{social.url}}"><i [class]="social.icon"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6><a routerLink="/team-details/{{item.id}}">{{item.name}}</a></h6>
+                    <p class="member_post">{{item.designation}}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Pagination Start -->
+        <div class="pagination_wrap pagination mt-4">
+            <pagination-controls (pageChange)="page = $event" responsive="true" previousLabel="<" nextLabel=">">
+            </pagination-controls>
+        </div>
+        <!-- Pagination End -->
+    </div>
+</div>
+<!-- /Team -->

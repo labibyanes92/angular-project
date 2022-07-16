@@ -1,0 +1,78 @@
+<!-- Blog -->
+<div class="section-padding pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="post_wrap" *ngFor="let item of blogpost | paginate: { itemsPerPage: 2, currentPage: page }">
+                    <!-- Standard -->
+                    <div class="post_img" *ngIf="item.format === 'standard' || item.format === ''">
+                        <a routerLink="/blog-details/{{item.id}}">
+                            <img [src]="item.image[0]" [alt]="item.title">
+                        </a>
+                    </div>
+                    <!-- Video -->
+                    <div class="post_img post-format-video" *ngIf="item.format === 'video' && item.video != '' ">
+                        <a routerLink="/blog-details/{{item.id}}">
+                            <img [src]="item.image[0]" [alt]="item.title">
+                        </a>
+                        <a class="popup-youtube sigma_video-btn" href="{{item.video}}"><i class="fa fa-play"></i></a>
+                    </div>
+                    <!-- Gallery -->
+                    <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="post_img post-img-slider post-format-gallery" *ngIf="item.format === 'gallery'">
+                        <img ngxSlickItem [src]="image" [alt]="item.title" *ngFor="let image of item.image">
+                    </ngx-slick-carousel>
+                    <!-- Quote -->
+                    <div class="post_wrap post-format-quote" *ngIf="item.format === 'quote' && item.quote != '' && item.quoteauthor != ''">
+                        <blockquote>
+                            <p>{{item.quote}}</p>
+                            <div class="quote_owner">- {{item.quoteauthor}}</div>
+                        </blockquote>
+                    </div>
+                    <!-- Audio -->
+                    <div class="post_img m-0 post-format-audio" *ngIf="item.format === 'audio' && item.audio != '' ">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" [src]="sanitnizeAudioURL(item.audio)"></iframe>
+                        </div>
+                    </div>
+                    <!-- Link -->
+                    <div class="post_wrap post-format-link" *ngIf="item.format === 'link' && item.link != ''">
+                        <div class="post_info">
+                            <p>{{item.title}}</p>
+                            <div class="post_meta">
+                                <a href="{{item.link}}">
+                                    <i class="fa fa-link"></i>
+                                    {{item.link}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post_info">
+                        <div class="post_date">
+                            <a routerLink="/blog-details/{{item.id}}">
+                                <i class="fa fa-calendar"></i> 
+                                {{item.postdate}}
+                            </a>
+                            </div>
+                        <h5><a routerLink="/blog-details/{{item.id}}">{{item.title}}</a></h5>
+                        <p>{{item.shortdesc}}...</p>
+                        <div class="post_categorys">
+                            <a routerLink="/blog/cat/{{cat.id}}" *ngFor="let cat of getCategories(item.category) | slice:0:2">{{cat.title}}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination Start -->
+                <div class="pagination_wrap pagination">
+                    <pagination-controls (pageChange)="page = $event" responsive="true" previousLabel="<" nextLabel=">">
+                    </pagination-controls>
+                </div>
+                <!-- Pagination End -->
+            </div>
+            <!-- Sidebar -->
+            <aside class="col-lg-4">
+                <app-blog-sidebar></app-blog-sidebar>
+            </aside>
+            <!-- /Sidebar -->
+        </div>
+    </div>
+</div>
+<!-- /Blog -->

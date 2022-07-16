@@ -1,0 +1,17 @@
+<!-- Intro -->
+<div class="sigma-banner banner-2">
+    <ngx-slick-carousel #slickModal="slick-carousel" [config]="settings" class="sigma_banner-slider">
+        <!-- slider-item -->
+        <div ngxSlickItem class="sigma_banner-slider-inner bg-cover bg-center" [style.background-image]="'url('+item.bgimage+')'" *ngFor="let item of bannerdata">
+            <div class="container">
+                <div class="intro_text style-2">
+                    <p>{{item.couponcode}}</p>
+                    <h1>{{item.title}}</h1>
+                    <p>{{item.text}}</p>
+                    <a routerLink="/shop-left" class="btn">Order now</a>
+                </div>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div>
+<!-- /Intro -->

@@ -1,0 +1,109 @@
+<!-- Portfolio Details -->
+<div class="section-padding" *ngFor="let item of portfoliodetails">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="post_content">
+                    <h4>{{item.title}}</h4>
+                    <div [innerHtml]="item.htmldesc"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="post_tags pt-0">
+                                <h6>Releted Tags</h6>
+                                <a routerLink="/portfolio/tag/{{tag.id}}"
+                                    *ngFor="let tag of getTags(item.tags)">{{tag.title}}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="post_share pt-0">
+                                <h6>Social Share</h6>
+                                <a href="javascript:void(0)" *ngFor="let social of socialShare(item.title)"
+                                    (click)="openSocialPopup(social)">
+                                    <i [class]="social.iconClass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let image of item.image">
+                            <a href="{{image}}" class="gallery-thumb dark-overlay">
+                                <img [src]="image" alt="post">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sigma_single-pagination" [innerHtml]="postnavigation(portfoliopost, item.id - 1)"> </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <aside class="col-lg-4">
+                <div class="sidebar_wrap sidebar-2">
+                    <div class="sidebar_widget">
+                        <div class="widget_title">
+                            <h4>Honey Details</h4>
+                        </div>
+                        <div class="sigma_list-item">
+                            <label>Client:</label>
+                            <span *ngFor="let client of getClient(item.client)">{{client.name}}</span>
+                        </div>
+                        <div class="sigma_list-item">
+                            <label>Location:</label>
+                            <span>{{item.location}}</span>
+                        </div>
+                        <div class="sigma_list-item">
+                            <label>Honey:</label>
+                            <span>{{item.production}} </span>
+                        </div>
+                    </div>
+                    <div class="sidebar_widget categories_widget">
+                        <div class="widget_title">
+                            <h4>Latest Clients</h4>
+                        </div>
+                        <ul>
+                            <li *ngFor="let client of clients">
+                                <a routerLink="/portfolio/client/{{client.id}}">{{client.name}}
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sidebar_widget p-0">
+                        <blockquote>
+                            <div class="widget_title">
+                                <h4 class="text-white">Request a Quote</h4>
+                            </div>
+                            <p>Honey is a sweet, viscous food substance made by honey bees and some related insects eiusmod tempor incididuntAccording to the Codex Alimentarius of the United Nations.</p>
+                            <a routerLink="/contact" class="btn btn-sm">Get a Quote</a>
+                        </blockquote>
+                    </div>
+                    <div class="sidebar_widget categories_widget">
+                        <div class="widget_title">
+                            <h4>Project assets</h4>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="#" class="justify-content-start">
+                                    <i class="fa fa-file mr-3"></i>
+                                    Download Pdf
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="justify-content-start">
+                                    <i class="fa fa-file mr-3"></i>
+                                    Download Documents
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="justify-content-start">
+                                    <i class="fa fa-file mr-3"></i>
+                                    Download Brochures
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <!-- /Sidebar -->
+        </div>
+    </div>
+</div>
+<!-- /Portfolio Details -->

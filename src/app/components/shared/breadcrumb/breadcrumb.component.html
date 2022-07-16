@@ -1,0 +1,22 @@
+<!-- Subheader -->
+<breadcrumb #parent>
+    <div id="inner_header" class="bg-overlay" data-parallax="scroll" [style.background-image]="'url(assets/images/header_image.jpg)'">
+        <div class="container">
+            <div class="inner_intro">
+                <ng-template ngFor let-route [ngForOf]="parent.breadcrumbs">
+                    <h1>{{ route.displayName }}</h1>
+                    <nav class="breadcrumb">
+                        <ul>
+                            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                            <li *ngIf="!route.terminal" class="breadcrumb-item">
+                                <a href="" [routerLink]="[route.url]">{{ route.displayName }}</a>
+                            </li>
+                            <li *ngIf="route.terminal" class="breadcrumb-item active">{{ route.displayName }}</li>
+                        </ul>
+                    </nav>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</breadcrumb>
+<!-- /Subheader -->

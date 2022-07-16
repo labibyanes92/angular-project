@@ -1,0 +1,21 @@
+<!-- Top Products -->
+<div class="section-padding-2 pt-0">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-md-4" *ngFor="let item of shopblock | slice:0:3">
+                <div class="sigma_category style-7">
+                    <a routerLink="/shop-details/{{item.id}}">
+                        <img [src]="item.image[0]" [alt]="item.title">
+                    </a>
+                    <div class="sigma_category-inner">
+                        <div class="sigma_category-body">
+                            <h4 class="text-white">{{item.title}}</h4>
+                            <a routerLink="/shop-details/{{item.id}}" class="btn btn-sm">Order now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Products -->

@@ -1,0 +1,67 @@
+<div class="sidebar_wrap p-0">
+    <div class="sidebar_widget search_widget">
+        <div class="widget_title">
+            <h4>Search</h4>
+        </div>
+        <form (ngSubmit)="onSubmit()" method="GET">
+            <input type="text" class="form-control" placeholder="Search your keyword..." name="searchText"
+                [(ngModel)]="searchText" required>
+            <button type="submit" class="search_btn"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="sidebar_widget popular_widget">
+        <div class="widget_title">
+            <h4>Recent Products</h4>
+        </div>
+        <ul>
+            <li *ngFor="let item of recentPost()">
+                <div class="post_thumb">
+                    <a routerLink="/shop-details/{{item.id}}">
+                        <img [src]="item.image[0]" [alt]="item.title">
+                    </a>
+                </div>
+                <h6><a routerLink="/shop-details/{{item.id}}">{{item.title}}</a></h6>
+                <div class="sigma_product-price">
+                    <span>${{item.price * (100 - item.discount) / 100 | number:'1.2-2'}}</span>
+                    <span *ngIf="item.discount">${{item.price | number:'1.2-2'}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar_widget">
+        <div class="widget_title">
+            <h4>Price</h4>
+        </div>
+        <ngx-slider [(value)]="priceFilter[0]" [(highValue)]="priceFilter[1]" [options]="priceFilterOptions" [(ngModel)]="priceFilter" (click)="handlePriceChange()"></ngx-slider>
+    </div>
+    <div class="sidebar_widget categories_widget">
+        <div class="widget_title">
+            <h4>Categories</h4>
+        </div>
+        <ul>
+            <li *ngFor="let item of category">
+                <a routerLink="/shop/cat/{{item.id}}">{{item.title}}<span>{{item.count}}</span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar_widget instagram_widget">
+        <div class="widget_title">
+            <h4>Instagram</h4>
+        </div>
+        <ul>
+            <li *ngFor="let item of instagram | slice:0:6">
+                <a href="#">
+                    <img [src]="item.image" alt="image">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar_widget">
+        <div class="widget_title">
+            <h4>Tags</h4>
+        </div>
+        <div class="tag_cloud">
+            <a routerLink="/shop/tag/{{item.id}}" *ngFor="let item of producttags">{{item.title}}</a>
+        </div>
+    </div>
+</div>
